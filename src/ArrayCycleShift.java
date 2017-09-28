@@ -30,8 +30,6 @@ public class ArrayCycleShift {
         }
         System.out.println("\n\n Смещение двумерного массива");
         int[][] array2 = new int[3][5];
-
-        //System.out.println(Arrays.deepToString(array2));
         for (int i = 0; i < array2.length; i++) {
             for (int j = 0; j < array2[i].length; j++) {
                 array2[i][j] = random.nextInt(20);

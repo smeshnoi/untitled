@@ -3,9 +3,9 @@ import java.util.Random;
 public class MergerArray {
     public static void main(String[] args) {
         Random random = new Random();
-        int size = random.nextInt(5);
+        int size = random.nextInt(5) + 1;
         int[] array = new int[size];
-        size = random.nextInt(5);
+        size = random.nextInt(5) + 1;
         int[] array2 = new int[size];
         array = fillArray(array);
         array2 = fillArray(array2);
