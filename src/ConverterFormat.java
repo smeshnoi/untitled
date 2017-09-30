@@ -5,29 +5,39 @@ public class ConverterFormat {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.next();
         System.out.println(s);
-        convertRomatToArabic(s);
-        char[] arrayRoman = new char[] {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
-        int[] arrayArabic = new int[] {1000, 500, 100, 50, 10, 5, 1};
         int number = 0;
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = 0; j < arrayRoman.length; j++) {
-                if (s.charAt(i) == arrayRoman[j] && s.charAt(i - 1) == arrayRoman[j - 1]) {
-                    number -= arrayArabic[j];
-                    return;
-                }
-                if (s.charAt(i) == arrayRoman[j]) {
-                    System.out.println("Ok");
-                    number += arrayArabic[j];
-                    return;
-                } else {
-
-                }
+        int lastNumber = 0;
+        int numA = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            number = convertRomantToArabic(s.charAt(i));
+            if (number < 0) {
+                System.out.println("Числа не существует");
+                return;
             }
-            System.out.println(number);
+            numA = (number > lastNumber) ? numA + number : numA - number;
+            lastNumber = number;
         }
+        System.out.println(numA);
     }
 
-    private static void convertRomatToArabic(String s) {
-        System.out.println("Конвертация");
+    private static int convertRomantToArabic(char charCharacter) {
+        switch (charCharacter) {
+            case 'M':
+                return 1000;
+            case 'D':
+                return 500;
+            case 'C':
+                return 100;
+            case 'L':
+                return 50;
+            case 'X':
+                return 10;
+            case 'V':
+                return 5;
+            case 'I':
+                return 1;
+            default:
+                return -1;
+        }
     }
 }
