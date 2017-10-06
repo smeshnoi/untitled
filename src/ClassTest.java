@@ -1,3 +1,4 @@
+import java.io.InputStream;
 import java.util.Random;
 
 public class ClassTest {
@@ -15,6 +16,12 @@ public class ClassTest {
                 System.out.print(anArray[j] + " ");
             }
             System.out.println();
+
+
+//            String  language = Language.ENGLISH;
+//            Audio audio = Audio.getInstance();
+//            InputStream sound  = audio.getAudio("Hello javatalks", language);
+//            audio.play(sound);
         }
     }
 }
