@@ -5,7 +5,8 @@ import java.util.Random;
 
 public class Dump {
     private static HashMap<String, Integer> dumpMap;
-    public HashMap<String, Integer> getDumpMap() {
+
+    public static HashMap<String, Integer> getDumpMap() {
         return dumpMap;
     }
 
@@ -19,6 +20,7 @@ public class Dump {
             int generateDetail = random.nextInt(9) + 1;
             System.out.print(generateDetail + " ");
             dumpMap = addDetailToDump(dumpMap, generateDetail);
+            Dump.dumpMap = dumpMap;
         }
         return dumpMap;
     }
@@ -26,10 +28,11 @@ public class Dump {
     public static HashMap generateNightDumpAdd(HashMap<String, Integer> dumpMap) {
         Random random = new Random();
         int countDetail = random.nextInt(4) + 1;
-        System.out.print(countDetail);
+        System.out.println("На свалку выброшено следующее кол-во деталей: " + countDetail);
         for (int i = 0; i < countDetail; i++) {
             int detail = random.nextInt(9) + 1;
             dumpMap = addDetailToDump(dumpMap, detail);
+            Dump.dumpMap = dumpMap;
         }
         return dumpMap;
     }
@@ -103,7 +106,7 @@ public class Dump {
         return dumpMap;
     }
 
-    public void takeDetail (HashMap<String, Integer> dumpMap, String detail) {
+    public static HashMap takeDetail (HashMap<String, Integer> assistantMap, String detail) {
         switch (detail) {
             case "Head":
                 if (dumpMap.get("Head") > 1) {
@@ -111,6 +114,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("Head");
                 }
+                assistantMap = addDetailToDump(assistantMap, 1);
                 break;
             case "Body":
                 if (dumpMap.get("Body") > 1) {
@@ -118,6 +122,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("Body");
                 }
+                assistantMap = addDetailToDump(assistantMap, 2);
                 break;
             case "LeftArm":
                 if (dumpMap.get("LeftArm") > 1) {
@@ -125,6 +130,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("LeftArm");
                 }
+                assistantMap = addDetailToDump(assistantMap, 3);
                 break;
             case "RightArm":
                 if (dumpMap.get("RightArm") > 1) {
@@ -132,6 +138,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("RightArm");
                 }
+                assistantMap = addDetailToDump(assistantMap, 4);
                 break;
             case "LeftLeg":
                 if (dumpMap.get("LeftLeg") > 1) {
@@ -139,6 +146,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("LeftLeg");
                 }
+                assistantMap = addDetailToDump(assistantMap, 5);
                 break;
             case "RightLeg":
                 if (dumpMap.get("RightLeg") > 1) {
@@ -146,6 +154,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("RightLeg");
                 }
+                assistantMap = addDetailToDump(assistantMap, 6);
                 break;
             case "CPU":
                 if (dumpMap.get("CPU") > 1) {
@@ -153,6 +162,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("CPU");
                 }
+                assistantMap = addDetailToDump(assistantMap, 7);
                 break;
             case "RAM":
                 if (dumpMap.get("RAM") > 1) {
@@ -160,6 +170,7 @@ public class Dump {
                 } else {
                     dumpMap.remove("RAM");
                 }
+                assistantMap = addDetailToDump(assistantMap, 8);
                 break;
             case "HDD":
                 if (dumpMap.get("HDD") > 1) {
@@ -167,9 +178,10 @@ public class Dump {
                 } else {
                     dumpMap.remove("HDD");
                 }
+                assistantMap = addDetailToDump(assistantMap, 9);
                 break;
         }
-        this.dumpMap = dumpMap;
+        return assistantMap;
     }
 
     public void main(String[] args) {
