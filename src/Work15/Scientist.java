@@ -1,5 +1,6 @@
 package Work15;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Scientist {
@@ -10,9 +11,16 @@ public class Scientist {
         this.name = name;
     }
 
-    public Scientist(String name, HashMap<String, Integer> robotMap) {
+    public Scientist(String name, HashMap<String, Integer> robotMap, Assistant assistant) {
         this.name = name;
         this.robotMap = robotMap;
+    }
+
+    public void getDetail (ArrayList<String> pickAssistArray) {
+        for (int i = 0; i < pickAssistArray.size() - 1; i++) {
+            robotMap.put(pickAssistArray.get(i), 1);
+            pickAssistArray.remove(i);
+        }
     }
 
     public String getName() {
