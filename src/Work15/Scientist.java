@@ -1,26 +1,38 @@
 package Work15;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Scientist {
     private String name;
     private HashMap<String, Integer> robotMap = new HashMap<>();
+    private int count = 0;
 
     public Scientist(String name) {
         this.name = name;
     }
 
-    public Scientist(String name, HashMap<String, Integer> robotMap, Assistant assistant) {
+    public int getCount() {
+        return count;
+    }
+
+    public Scientist(String name, Assistant assistant) {
         this.name = name;
         this.robotMap = robotMap;
     }
 
     public void getDetail (ArrayList<String> pickAssistArray) {
-        for (int i = 0; i < pickAssistArray.size() - 1; i++) {
-            robotMap.put(pickAssistArray.get(i), 1);
-            pickAssistArray.remove(i);
+        int size = pickAssistArray.size();
+        for (int i = 0; i < size; i++) {
+            if (robotMap.get(pickAssistArray.get(i)) != null) {
+                robotMap.put(pickAssistArray.get(i), robotMap.get(pickAssistArray.get(i)) + 1);
+            } else {
+                robotMap.put(pickAssistArray.get(i), 1);
+            }
         }
+        pickAssistArray.removeAll(pickAssistArray);
     }
 
     public String getName() {
@@ -31,15 +43,25 @@ public class Scientist {
         this.name = name;
     }
 
-    public HashMap<String, Integer> getRobotMap() {
-        return robotMap;
+    public void createRobot() {
+        System.out.println(robotMap.size());
+        System.out.println(robotMap);
+        List<String> robotArray = Arrays.asList("Head", "Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg", "CPU", "RAM", "HDD");
+        while (robotMap.size() == 9) {
+            for (String value: robotArray) {
+                if (robotMap.get(value) > 1) {
+                    robotMap.put(value, robotMap.get(value) - 1);
+                } else {
+                    robotMap.remove(value);
+                }
+            }
+            count++;
+        }
+        System.out.println(robotMap);
+        System.out.println(count);
     }
 
     public void setRobotMap(HashMap<String, Integer> robotMap) {
         this.robotMap = robotMap;
-    }
-
-    public void createRobot(HashMap<String, Integer> robotMap) {
-
     }
 }
