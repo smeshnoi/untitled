@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Dump {
     private static ArrayList<String> dumpArray;
+    private static final Object LOCK = new Object();
 
     public static ArrayList<String> getDumpArray() {
         return dumpArray;
@@ -20,10 +21,11 @@ public class Dump {
             String nameDetail;
             int generateDetail = random.nextInt(9) + 1;
             nameDetail = getNameDetail(generateDetail);
-            dumpArray = addDetailToDump(dumpArray, nameDetail);
+            Dump.dumpArray = addDetailToDump(dumpArray, nameDetail);
             Dump.dumpArray = dumpArray;
         }
-        return dumpArray;
+        System.out.println("На свалку выброшено 20 деталей");
+        return Dump.dumpArray;
     }
 
     public static ArrayList generateNightDumpAdd(ArrayList<String> dumpArray) {
@@ -75,14 +77,21 @@ public class Dump {
     }
 
     public static ArrayList addDetailToDump(ArrayList<String> dumpArray, String detail) {
-        dumpArray.add(detail);
+        synchronized (LOCK) {
+            dumpArray.add(detail);
+        }
         return dumpArray;
     }
 
     public static ArrayList takeDetail (ArrayList<String> assistantArray, int indexDetail) {
-        String detail = dumpArray.get(indexDetail);
-        dumpArray.remove(indexDetail);
-        assistantArray = addDetailToDump(assistantArray, detail);
+        synchronized (LOCK) {
+            if (indexDetail >= dumpArray.size()) {
+                indexDetail =  dumpArray.size() - 1;
+            }
+            String detail = dumpArray.get(indexDetail);
+            dumpArray.remove(indexDetail);
+            assistantArray = addDetailToDump(assistantArray, detail);
+        }
         return assistantArray;
     }
 }

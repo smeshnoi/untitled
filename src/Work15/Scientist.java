@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Scientist {
     private String name;
+    private Assistant assistant;
     private HashMap<String, Integer> robotMap = new HashMap<>();
     private int count = 0;
 
@@ -21,6 +22,7 @@ public class Scientist {
     public Scientist(String name, Assistant assistant) {
         this.name = name;
         this.robotMap = robotMap;
+        this.assistant = assistant;
     }
 
     public void getDetail (ArrayList<String> pickAssistArray) {
@@ -44,8 +46,6 @@ public class Scientist {
     }
 
     public void createRobot() {
-        System.out.println(robotMap.size());
-        System.out.println(robotMap);
         List<String> robotArray = Arrays.asList("Head", "Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg", "CPU", "RAM", "HDD");
         while (robotMap.size() == 9) {
             for (String value: robotArray) {
@@ -55,10 +55,11 @@ public class Scientist {
                     robotMap.remove(value);
                 }
             }
+            System.out.println(getName() + " создал робота!");
             count++;
         }
-        System.out.println(robotMap);
-        System.out.println(count);
+        //System.out.println(robotMap);
+        //System.out.println(count);
     }
 
     public void setRobotMap(HashMap<String, Integer> robotMap) {

@@ -1,96 +1,56 @@
 package Work15;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Main {
-    private static Assistant assistantSc;
-    private static Scientist scientist;
-    private static Scientist scientist2 = new Scientist("Fedot");
 
     public static void main(String[] args) {
-        ArrayList<String> hm;
-        HashMap<String, Integer> assistantMap = new HashMap<>();
-        ArrayList<String> assistantArray = new ArrayList<>();
-        hm = Dump.generateFirstNight(new ArrayList<>());
-        Assistant assistant = new Assistant("Федор");
+        Assistant assistant1 = new Assistant("Федор");
         Assistant assistant2 = new Assistant("Антон");
-        System.out.println();
-        for (String value: hm) {
-            System.out.print(value + " ");
-        }
-        Scientist scientist1= new Scientist("Botan", assistantSc);
-
-        //Thread thread2 = new Thread((Runnable) scientist2);
-//        thread1.start();
-//        try {
-//            thread1.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        //thread2.start();
-        //assistant.generateNightAssistant();
-        System.out.println();
-        for (String value: hm) {
-            System.out.print(value + " ");
-        }
-        int time = (int) System.currentTimeMillis();
-        System.out.println(time);
-        for (int i = 0; i < 20; i++) {
-            hm = Dump.generateNightDumpAdd(hm);
-            Night thread1 = new Night(scientist1, assistant);
+        Scientist scientist1= new Scientist("Botan", assistant1);
+        Scientist scientist2= new Scientist("Fedot", assistant2);
+        Dump.generateFirstNight(new ArrayList<>());
+        for (int i = 1; i <= 100; i++) {
+            NightDump threadDump = new NightDump();
+            NightAssistant thread1 = new NightAssistant(scientist1, assistant1);
+            NightAssistant thread2 = new NightAssistant(scientist2, assistant2);
+            threadDump.start();
             thread1.start();
+            thread2.start();
             try {
+                threadDump.join();
                 thread1.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //assistantArray = assistant.generateNightAssistant();
-            try {
+                thread2.join();
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
-//        System.out.println();
-//        for (String value: hm) {
-//            System.out.print(value + " ");
-//        }
-//        hm = Dump.getDumpArray();
-//        System.out.println();
-//        for (String value: assistantArray) {
-//            System.out.print("! " + value);
-//        }
-//        System.out.println();
-//        for (String value: hm) {
-//            System.out.print(value + " ");
-//        }
-//        //thread1scientist1.getDetail(assistantArray);
-//        System.out.println();
-//        //scientist.getRobotMap();
-//        assistantArray = assistant2.generateNightAssistant();
-//        scientist2.getDetail(assistantArray);
-//        scientist2.createRobot();
-//        System.out.println();
-//        for (String value: hm) {
-//            System.out.print(value + " ");
-//        }
+        System.out.println(scientist1.getName() + " создал " + scientist1.getCount() + " роботов");
+        System.out.println(scientist2.getName() + " создал " + scientist2.getCount() + " роботов");
     }
 
-    public static class Night extends Thread{
+    public static class NightDump extends Thread{
 
-        public Night(Scientist botan, Assistant assistant) {
-            scientist = botan;
-            assistantSc = assistant;
+        @Override
+        public void run() {
+            Dump.generateNightDumpAdd(Dump.getDumpArray());
+        }
+    }
+
+    public static class NightAssistant extends Thread{
+        private Assistant assistant;
+        private Scientist scientist;
+
+        public NightAssistant(Scientist scientist, Assistant assistant) {
+            this.scientist = scientist;
+            this.assistant = assistant;
         }
 
         @Override
         public void run() {
-            scientist.getDetail(assistantSc.generateNightAssistant());
+            scientist.getDetail(assistant.generateNightAssistant());
             scientist.createRobot();
-            System.out.println(scientist.getCount());
         }
     }
 }

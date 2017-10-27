@@ -1,13 +1,20 @@
 package Work15;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class Assistant {
+    private Assistant assistant;
     private String name;
-    private HashMap pickAssistMap = new HashMap<>();
     private ArrayList<String> pickAssistArray = new ArrayList<>();
+
+    public Assistant getAssistant() {
+        return assistant;
+    }
+
+    public void setAssistant(Assistant assistant) {
+        this.assistant = assistant;
+    }
 
     public Assistant(String name) {
         this.name = name;
@@ -18,14 +25,18 @@ public class Assistant {
         Random random = new Random();
         int countDetail = random.nextInt(4) + 1;
         for (int i = 0; i < countDetail; i++) {
-            int detail = random.nextInt(Dump.getDumpArray().size());
-            pickAssistArray = assistantToDump(getPickAssistArray(), detail);
+            if (Dump.getDumpArray().size() == 0) {
+                System.out.println("Свалка пуста");
+            } else {
+                int detail = random.nextInt(Dump.getDumpArray().size());
+                pickAssistArray = assistantToDump(getPickAssistArray(), detail);
+            }
         }
         return pickAssistArray;
     }
 
     public ArrayList assistantToDump (ArrayList<String> pickAssistArray, int detail) {
-        if (Dump.getDumpArray().size() > 0) {
+        if (Dump.getDumpArray().size() > 0 && detail != 0) {
             pickAssistArray = Dump.takeDetail(pickAssistArray, detail);
         } else {
             System.out.println("Деталей на свалке не найдено");
@@ -50,9 +61,5 @@ public class Assistant {
 
     public ArrayList<String> getPickAssistArray() {
         return pickAssistArray;
-    }
-
-    public void setPickAssistMap(HashMap<String, Integer> pickAssistMap) {
-        this.pickAssistMap = pickAssistMap;
     }
 }
